@@ -1,0 +1,52 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "create app"
+  lane :newapp do
+    produce(
+      username: "itrufeng@gmail.com",
+      app_identifier: "com.thoughtworks.Wow",
+      app_name: "WowAtTW",
+      language: "English",
+      app_version: "1.0",
+      sku: "123",
+      team_id: "25EZUPR5QA",
+      itc_team_id: "117121676"
+    )
+  end
+
+  desc "register devices by a deivces list file"
+  lane :devices do
+    register_devices(
+      devices_file: "fastlane/devices.txt",
+      team_id: "25EZUPR5QA",
+      username: "itrufeng@gmail.com",
+      platform: "ios"
+    )
+  end
+
+  desc "get provisioning profiles"
+  lane :sync do
+    match(
+      type: "development",
+      git_url: "git@github.com:jizhangattw/wow_fastlane_match.git",
+      app_identifier: "com.thoughtworks.Wow",
+      force_for_new_devices: true
+    )
+  end
+end
